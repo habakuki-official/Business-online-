@@ -1,75 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard - Business Online</title>
+    <title>Business Online</title>
+
     <style>
         body {
-            font-family: Arial, sans-serif;
             background: #000;
-            color: #0f0;
-            padding: 20px;
+            color: #00ff00;
+            font-family: Arial, sans-serif;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+
+            padding-top: 60px;
         }
-        h1, h2 {
-            text-align: center;
+
+        h1 {
+            margin-bottom: 10px;
         }
-        button {
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 250px;
             padding: 10px;
             margin: 5px;
             border: none;
             border-radius: 5px;
+        }
+
+        button {
             background: #00ff00;
-            color: #000;
-            font-weight: bold;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
             cursor: pointer;
         }
-        #tasks p {
-            margin: 10px 0;
+
+        button:hover {
+            background: #00cc00;
+        }
+
+        a {
+            color: #00ff00;
+            margin-top: 15px;
+            display: block;
         }
     </style>
 </head>
+
 <body>
 
-<h1>Dashboard</h1>
-<p>Welcome, <span id="username"></span></p>
-<p>Fake Points Balance: <span id="balanceDisplay">0</span></p>
+    <h1>Welcome to Business Online</h1>
+    <p>Login to start your journey</p>
 
-<h2>Tasks</h2>
-<div id="tasks"></div>
+    <input type="text" id="username" placeholder="Enter Username">
+    <input type="password" id="password" placeholder="Enter Password">
 
-<button onclick="withdraw()">Withdraw</button>
-<p id="withdrawMsg"></p>
+    <button onclick="login()">Start Business Now</button>
 
-<script>
-// Get user info
-document.getElementById("username").innerText = localStorage.getItem("username") || "User";
+    <a href="#" onclick="createAccount()">Create New Account</a>
 
-// Points / balance
-var balance = parseInt(localStorage.getItem('balance')) || 0;
-document.getElementById("balanceDisplay").innerText = balance;
+    <p id="message"></p>
 
-// Tasks list
-var taskList = ["Check Ads", "Complete Survey", "Watch Video"];
-var taskHTML = "";
-taskList.forEach((task,i)=>{
-    taskHTML += `<p>${task} <button onclick="completeTask(${i})">Complete (+150 points)</button></p>`;
-});
-document.getElementById("tasks").innerHTML = taskHTML;
+    <script>
+        function login(){
+            let user = document.getElementById("username").value;
+            let pass = document.getElementById("password").value;
 
-// Complete task function
-function completeTask(index){
-    balance += 150;
-    localStorage.setItem('balance', balance);
-    document.getElementById("balanceDisplay").innerText = balance;
-    alert(`You completed "${taskList[index]}" and earned 150 points!`);
-}
+            let savedUser = localStorage.getItem("username");
+            let savedPass = localStorage.getItem("password");
 
-// Withdraw blocked
-function withdraw(){
-    document.getElementById("withdrawMsg").innerText =
-        "⚠️ Points cannot be withdrawn. They are virtual for experience only!";
-}
-</script>
+            if(user === savedUser && pass === savedPass){
+                alert("Welcome " + user);
+                window.location.href = "dashboard.html";
+            } else {
+                document.getElementById("message").innerText = "❌ Wrong username or password";
+            }
+        }
+
+        function createAccount(){
+            let user = document.getElementById("username").value;
+            let pass = document.getElementById("password").value;
+
+            if(user === "" || pass === ""){
+                alert("Please fill all fields");
+                return;
+            }
+
+            localStorage.setItem("username", user);
+            localStorage.setItem("password", pass);
+
+            document.getElementById("message").innerText = "✅ Account created successfully!";
+        }
+    </script>
 
 </body>
 </html>
