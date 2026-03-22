@@ -55,3 +55,21 @@ taskList.forEach((task,i)=>{
     taskHTML += `<p>${task} <button onclick="completeTask(${i})">Complete (+150 points)</button></p>`;
 });
 document.getElementById("tasks").innerHTML = taskHTML;
+
+// Complete task function
+function completeTask(index){
+    balance += 150;
+    localStorage.setItem('balance', balance);
+    document.getElementById("balanceDisplay").innerText = balance;
+    alert(`You completed "${taskList[index]}" and earned 150 points!`);
+}
+
+// Withdraw blocked
+function withdraw(){
+    document.getElementById("withdrawMsg").innerText =
+        "⚠️ Points cannot be withdrawn. They are virtual for experience only!";
+}
+</script>
+
+</body>
+</html>
