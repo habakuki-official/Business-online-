@@ -72,3 +72,78 @@ function createAccount(){
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Business Online</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #000;
+            color: #0f0;
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        button {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background: #00ff00;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #tasks p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Dashboard</h1>
+<p>Welcome, <span id="username"></span></p>
+<p>Fake Points Balance: <span id="balanceDisplay">0</span></p>
+
+<h2>Tasks</h2>
+<div id="tasks"></div>
+
+<button onclick="withdraw()">Withdraw</button>
+<p id="withdrawMsg"></p>
+
+<script>
+// Get user info
+document.getElementById("username").innerText = localStorage.getItem("username") || "User";
+
+// Points / balance
+var balance = parseInt(localStorage.getItem('balance')) || 0;
+document.getElementById("balanceDisplay").innerText = balance;
+
+// Tasks list
+var taskList = ["Check Ads", "Complete Survey", "Watch Video"];
+var taskHTML = "";
+taskList.forEach((task,i)=>{
+    taskHTML += `<p>${task} <button onclick="completeTask(${i})">Complete (+150 points)</button></p>`;
+});
+document.getElementById("tasks").innerHTML = taskHTML;
+
+// Complete task function
+function completeTask(index){
+    balance += 150;
+    localStorage.setItem('balance', balance);
+    document.getElementById("balanceDisplay").innerText = balance;
+    alert(`You completed "${taskList[index]}" and earned 150 points!`);
+}
+
+// Withdraw blocked
+function withdraw(){
+    document.getElementById("withdrawMsg").innerText =
+        "⚠️ Points cannot be withdrawn. They are virtual for experience only!";
+}
+</script>
+
+</body>
+</html>
