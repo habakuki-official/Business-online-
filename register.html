@@ -60,6 +60,11 @@
 
     <script>
         function register(){
+            // 🚫 Block multiple accounts
+if(localStorage.getItem("username")){
+    alert("❌ You already created an account on this device!");
+    return;
+}
             let name = document.getElementById("name").value;
             let surname = document.getElementById("surname").value;
             let user = document.getElementById("username").value;
