@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #000;
+            color: #00ff00;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            height: 100vh;
+            background: #0a0a0a;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #00ff00;
+            text-decoration: none;
+            margin: 10px 0;
+        }
+
+        .sidebar a:hover {
+            color: #0f0;
+        }
+
+        /* Main content */
+        .main {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .card {
+            background: #111;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #00ff00;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+
+        <a href="#">🏠 Home</a>
+        <a href="#">💰 Balance</a>
+        <a href="#">📋 Tasks</a>
+        <a href="#">📊 Statistics</a>
+        <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+
+        <h1 id="welcome"></h1>
+
+        <div class="card">
+            <h3>💰 Your Balance</h3>
+            <p id="balance">0 Fbu</p>
+        </div>
+
+        <div class="card">
+            <h3>📋 Tasks</h3>
+            <button onclick="doTask()">Do Task (+150 Fbu)</button>
+        </div>
+
+    </div>
+
+<script>
+    // Show username
+    let user = localStorage.getItem("username");
+    document.getElementById("welcome").innerText = "Welcome " + user;
+
+    // Balance system
+    let balance = localStorage.getItem("balance") || 0;
+    document.getElementById("balance").innerText = balance + " Fbu";
+
+    function doTask(){
+        balance = parseInt(balance) + 150;
+        localStorage.setItem("balance", balance);
+        document.getElementById("balance").innerText = balance + " Fbu";
+    }
+
+    function logout(){
+        window.location.href = "index.html";
+    }
+</script>
+
+</body>
+          </html>
