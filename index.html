@@ -72,4 +72,24 @@ function createAccount(){
 
 </body>
 </html>
-<
+<button onclick="startBusiness()">Start Business Now</button>
+
+<script>
+function startBusiness(){
+    let user = localStorage.getItem("username");
+
+    // Owner access (wewe)
+    if(user === "habacuc"){
+        window.location.href = "dashboard.html";
+    } else {
+        // Abandi basabwa kwishyura
+        let paid = confirm("Have you paid 20,000 Fbu via WhatsApp?");
+        
+        if(paid){
+            window.location.href = "dashboard.html";
+        } else {
+            alert("❌ Please pay first to access the dashboard.");
+        }
+    }
+}
+</script>
