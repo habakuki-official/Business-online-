@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Account</title>
+
+    <style>
+        body {
+            background: #000;
+            color: #00ff00;
+            font-family: Arial;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            padding-top: 50px;
+        }
+
+        input {
+            width: 250px;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            background: #00ff00;
+            color: black;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        a {
+            color: #00ff00;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Create Your Account</h2>
+
+    <input type="text" id="name" placeholder="Enter Name">
+    <input type="text" id="surname" placeholder="Enter Surname">
+    <input type="text" id="username" placeholder="Enter Username">
+    <input type="password" id="password" placeholder="Enter Password">
+
+    <button onclick="register()">Create Account</button>
+
+    <p id="msg"></p>
+
+    <a href="index.html">Back to Login</a>
+
+    <script>
+        function register(){
+            let name = document.getElementById("name").value;
+            let surname = document.getElementById("surname").value;
+            let user = document.getElementById("username").value;
+            let pass = document.getElementById("password").value;
+
+            if(name === "" || surname === "" || user === "" || pass === ""){
+                alert("Fill all fields");
+                return;
+            }
+
+            localStorage.setItem("name", name);
+            localStorage.setItem("surname", surname);
+            localStorage.setItem("username", user);
+            localStorage.setItem("password", pass);
+
+            document.getElementById("msg").innerText = "✅ Account created successfully!";
+
+            setTimeout(()=>{
+                window.location.href = "index.html";
+            }, 1500);
+        }
+    </script>
+
+</body>
+  </html>
