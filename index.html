@@ -2,110 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Business Online - Burundi</title>
+    <title>Dashboard - Business Online</title>
     <style>
-        <style>
-body {
-    font-family: Arial, sans-serif;
-    background: #0f0f0f;
-    color: #00ff00;
-
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: flex-start;
-
-    padding-top: 40px;
-}
+        body {
+            font-family: Arial, sans-serif;
+            background: #000;
+            color: #0f0;
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        button {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background: #00ff00;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #tasks p {
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-<script>
-function startBusiness(){
-    let user = localStorage.getItem("username");
 
-    if(user && user.toLowerCase() === "habacuc"){
-        alert("Welcome Admin 👑");
-        window.location.href = "dashboard.html";
-    } else {
-        let paid = confirm("Have you paid 20,000 Fbu via WhatsApp?");
-        
-        if(paid){
-            window.location.href = "dashboard.html";
-        } else {
-            alert("❌ Please pay first!");
-        }
-    }
-}
-</script>
-<h1>Welcome to Business Online</h1>
-<p>Pay 20,000 Fbu via WhatsApp to unlock your account</p>
+<h1>Dashboard</h1>
+<p>Welcome, <span id="username"></span></p>
+<p>Fake Points Balance: <span id="balanceDisplay">0</span></p>
 
-<form id="signupForm" onsubmit="return createAccount()">
-    <input type="text" id="newUser" placeholder="Username" required><br>
-    <input type="password" id="newPass" placeholder="Password" required><br>
-    <button type="submit">Create Account</button>
-</form>
+<h2>Tasks</h2>
+<div id="tasks"></div>
 
-<div id="msg"></div>
+<button onclick="withdraw()">Withdraw</button>
+<p id="withdrawMsg"></p>
 
 <script>
-function createAccount(){
-    var user = document.getElementById("newUser").value;
-    var pass = document.getElementById("newPass").value;
+// Get user info
+document.getElementById("username").innerText = localStorage.getItem("username") || "User";
 
-    localStorage.setItem("username", user);
-    localStorage.setItem("password", pass);
-    localStorage.setItem("balance", 0); // fake points start at 0
+// Points / balance
+var balance = parseInt(localStorage.getItem('balance')) || 0;
+document.getElementById("balanceDisplay").innerText = balance;
 
-    var msgDiv = document.getElementById("msg");
-    msgDiv.innerHTML = `
-        ✅ Account created! Please pay 20,000 Fbu via WhatsApp to +25765584191.<br>
-    `;
-
-    var payBtn = document.createElement("button");
-    payBtn.innerText = "Notify Payment (WhatsApp)";
-    payBtn.onclick = function(){
-        window.open("https://wa.me/25765584191?text=I%20have%20paid%2020000Fbu%20for%20Business%20Online%20account");
-    };
-    msgDiv.appendChild(payBtn);
-
-    // Optional: direct to dashboard after clicking payBtn
-    return false;
-}
-</script>
-
-</body>
-</html>
-<button onclick="startBusiness()">Start Business Now</button>
-
-<script>
-function startBusiness(){
-    let user = localStorage.getItem("username");
-
-    // Owner access (wewe)
-    if(user === "habacuc"){
-        window.location.href = "dashboard.html";
-    } else {
-        // Abandi basabwa kwishyura
-        let paid = confirm("Have you paid 20,000 Fbu via WhatsApp?");
-        
-        if(paid){
-            window.location.href = "dashboard.html";
-        } else {
-            alert("❌ Please pay first to access the dashboard.");
-        }
-    }
-}
-</script>
-<script>
-function startBusiness(){
-    // Admin direct access
-    window.location.href = "dashboard.html";
-}
-</script>
-<script>
-localStorage.clear();
-</script>
+// Tasks list
+var taskList = ["Check Ads", "Complete Survey", "Watch Video"];
+var taskHTML = "";
+taskList.forEach((task,i)=>{
+    taskHTML += `<p>${task} <button onclick="completeTask(${i})">Complete (+150 points)</button></p>`;
+});
+document.getElementById("tasks").innerHTML = taskHTML;
