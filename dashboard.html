@@ -103,11 +103,6 @@
         <h1 id="welcome"></h1>
 
         <div class="card">
-            <h3>💰 Your Balance</h3>
-            <p id="balance">0 Fbu</p>
-        </div>
-
-        <div class="card">
             <h3>📋 Tasks</h3>
             <button onclick="doTask()">Do Task (+150 Fbu)</button>
         </div>
@@ -124,7 +119,7 @@
     document.getElementById("balance").innerText = balance + " Fbu";
 
     function doTask(){
-        balance = parseInt(balance) + 0.25;
+        balance = parseInt(balance) + 150;
         localStorage.setItem("balance", balance);
         document.getElementById("balance").innerText = balance + " Fbu";
     }
