@@ -59,33 +59,39 @@
     <a href="index.html">Back to Login</a>
 
     <script>
-        function register(){
-            // 🚫 Block multiple accounts
-if(localStorage.getItem("username")){
-    alert("❌ You already created an account on this device!");
-    return;
+function register(){
+
+    let name = document.getElementById("name").value;
+    let surname = document.getElementById("surname").value;
+    let email = document.getElementById("email").value;
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    // 🛑 BANZA FILL FIELDS
+    if(name==="" || surname==="" || email==="" || user==="" || pass===""){
+        alert("Fill all fields first!");
+        return;
+    }
+
+    // 🚫 BLOCK MULTIPLE ACCOUNT
+    if(localStorage.getItem("username")){
+        alert("❌ You already created an account on this device!");
+        return;
+    }
+
+    // SAVE DATA
+    localStorage.setItem("name", name);
+    localStorage.setItem("surname", surname);
+    localStorage.setItem("email", email);
+    localStorage.setItem("username", user);
+    localStorage.setItem("password", pass);
+    localStorage.setItem("balance", 4500);
+
+    alert("✅ Account created!");
+
+    window.location.href = "index.html";
 }
-            let name = document.getElementById("name").value;
-            let surname = document.getElementById("surname").value;
-            let user = document.getElementById("username").value;
-            let pass = document.getElementById("password").value;
-
-            if(name === "" || surname === "" || user === "" || pass === ""){
-                alert("Fill all fields");
-                return;
-            }
-
-            localStorage.setItem("name", name);
-            localStorage.setItem("surname", surname);
-            localStorage.setItem("username", user);
-            localStorage.setItem("password", pass);
-            localStorage.setItem("balance", 4500);
-            document.getElementById("msg").innerText = "✅ Account created successfully!";
-
-            setTimeout(()=>{
-                window.location.href = "index.html";
-            }, 1500);
-        }
+      }
     </script>
 
 </body>
