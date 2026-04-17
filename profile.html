@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Profile</title>
+
+<style>
+body{
+    background:black;
+    color:white;
+    font-family:Arial;
+    text-align:center;
+}
+
+.container{
+    margin-top:30px;
+}
+
+img{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    border:3px solid lime;
+}
+
+input, textarea{
+    width:80%;
+    padding:10px;
+    margin:10px;
+    border-radius:10px;
+    border:none;
+}
+
+button{
+    background:lime;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<h1>My Profile</h1>
+
+<div class="container">
+
+<img id="profilePic" src="https://via.placeholder.com/120">
+
+<br><br>
+
+<input type="file" id="upload">
+
+<br>
+
+<input type="text" id="name" placeholder="Name">
+<input type="text" id="surname" placeholder="Surname">
+<input type="email" id="email" placeholder="Email">
+<input type="text" id="username" placeholder="Username">
+
+<textarea id="bio" placeholder="About you (short description)"></textarea>
+
+<br>
+
+<button onclick="saveProfile()">Save Profile</button>
+
+<p id="msg"></p>
+
+</div>
+
+<script>
+
+// LOAD DATA
+window.onload = function(){
+    document.getElementById("name").value = localStorage.getItem("name") || "";
+    document.getElementById("surname").value = localStorage.getItem("surname") || "";
+    document.getElementById("email").value = localStorage.getItem("email") || "";
+    document.getElementById("username").value = localStorage.getItem("username") || "";
+    document.getElementById("bio").value = localStorage.getItem("bio") || "";
+
+    let pic = localStorage.getItem("profilePic");
+    if(pic){
+        document.getElementById("profilePic").src = pic;
+    }
+}
+
+// SAVE PROFILE
+function saveProfile(){
+
+    let name = document.getElementById("name").value;
+    let surname = document.getElementById("surname").value;
+    let email = document.getElementById("email").value;
+    let username = document.getElementById("username").value;
+    let bio = document.getElementById("bio").value;
+
+    localStorage.setItem("name", name);
+    localStorage.setItem("surname", surname);
+    localStorage.setItem("email", email);
+    localStorage.setItem("username", username);
+    localStorage.setItem("bio", bio);
+
+    document.getElementById("msg").innerHTML = "✅ Profile updated!";
+}
+
+// IMAGE UPLOAD
+document.getElementById("upload").addEventListener("change", function(){
+
+    let file = this.files[0];
+    let reader = new FileReader();
+
+    reader.onload = function(){
+        let imgData = reader.result;
+        document.getElementById("profilePic").src = imgData;
+        localStorage.setItem("profilePic", imgData);
+    }
+
+    if(file){
+        reader.readAsDataURL(file);
+    }
+
+});
+
+</script>
+
+</body>
+</html>
