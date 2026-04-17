@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Withdraw</title>
+<style>
+body{
+  background:black;
+  color:white;
+  font-family:Arial;
+  text-align:center;
+}
+input, select, button{
+  padding:10px;
+  margin:10px;
+  width:80%;
+  border-radius:8px;
+}
+button{
+  background:lime;
+  border:none;
+  font-weight:bold;
+}
+.box{
+  margin-top:40px;
+}
+</style>
+</head>
+<body>
+
+<h2>💸 Withdraw Money</h2>
+
+<div class="box">
+
+<p>Balance: <span id="balance"></span> BIF</p>
+
+<input type="number" id="amount" placeholder="Enter amount">
+
+<select id="method">
+  <option>Lumicash</option>
+  <option>EcoCash</option>
+  <option>Bank</option>
+</select>
+
+<input type="text" id="number" placeholder="Phone / Account number">
+
+<button onclick="withdraw()">Withdraw</button>
+
+<p id="msg"></p>
+
+</div>
+
+<script>
+
+// load balance
+let balance = localStorage.getItem("balance") || 0;
+document.getElementById("balance").innerText = balance;
+
+// withdraw function
+function withdraw(){
+
+  let amount = parseInt(document.getElementById("amount").value);
+  let number = document.getElementById("number").value;
+
+  if(!amount || !number){
+    document.getElementById("msg").innerText = "❌ Fill all fields";
+    return;
+  }
+
+  if(amount > balance){
+    document.getElementById("msg").innerText = "❌ Not enough balance";
+    return;
+  }
+
+  balance = balance - amount;
+  localStorage.setItem("balance", balance);
+
+  document.getElementById("balance").innerText = balance;
+
+  document.getElementById("msg").innerText =
+  "✅ Withdrawal request sent! (Processing...)";
+}
+
+</script>
+
+</body>
+  </html>
