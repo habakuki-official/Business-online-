@@ -1,139 +1,165 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Dashboard</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial;
-            background: #000;
-            color: #00ff00;
-            display: flex;
-        }
+<style>
+body{
+  margin:0;
+  font-family: Arial;
+  background:#f2f2f2;
+}
 
-        /* Sidebar */
-        .sidebar {
-            width: 200px;
-            height: 100vh;
-            background: #0a0a0a;
-            padding: 20px;
-        }
+/* HEADER */
+.header{
+  background:white;
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.header h2{
+  color:#2c3e50;
+}
 
-        .sidebar h2 {
-            margin-bottom: 20px;
-        }
+/* CARD TOP */
+.card{
+  background:#1f4e79;
+  color:white;
+  margin:15px;
+  padding:20px;
+  border-radius:15px;
+}
+.card h3{
+  margin:0;
+}
+.flex{
+  display:flex;
+  justify-content:space-between;
+}
 
-        .sidebar a {
-            display: block;
-            color: #00ff00;
-            text-decoration: none;
-            margin: 10px 0;
-        }
+/* ICON MENU */
+.menu{
+  display:flex;
+  justify-content:space-around;
+  margin:15px;
+}
+.menu div{
+  text-align:center;
+}
+.menu img{
+  width:50px;
+  background:white;
+  padding:10px;
+  border-radius:50%;
+}
 
-        .sidebar a:hover {
-            color: #0f0;
-        }
+/* BONUS */
+.bonus{
+  background:linear-gradient(red, darkred);
+  color:white;
+  margin:15px;
+  padding:20px;
+  border-radius:15px;
+  font-size:20px;
+}
 
-        /* Main content */
-        .main {
-            flex: 1;
-            padding: 20px;
-        }
-
-        .card {
-            background: #111;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-        }
-
-        button {
-            background: #00ff00;
-            border: none;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 5px;
-        }
-    </style>
+/* BOTTOM NAV */
+.nav{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:white;
+  display:flex;
+  justify-content:space-around;
+  padding:10px;
+  border-top:1px solid #ccc;
+}
+</style>
 </head>
 
 <body>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <h2>Dashboard</h2>
+<div class="header">
+  <h2>Business Online</h2>
+</div>
 
-        <a href="#">🏠 Home</a>
-        <a href="#">💰 Balance</a>
-        <a href="#">📋 Tasks</a>
-        <a href="#">📊 Statistics</a>
-        <a href="#" onclick="logout()">🚪 Logout</a>
+<!-- TOP CARD -->
+<div class="card">
+  <div class="flex">
+    <div>
+      <h3>Expense</h3>
+      <p>24,000 BIF</p>
     </div>
-
-    <!-- Main -->
-    <div class="main">
-        <div class="main">
-
-    <h1 id="welcome"></h1>
-
-    <!-- ABOUT SHYIRA AHA 👇 -->
-    <div class="card" id="aboutBox" style="display:none;">
-        <h2>📘 About Business Online</h2>
-
-        <p>
-            Business Online ni urubuga rufasha abantu kuronka amafaranga biciye mu gukora ibikorwa vyoroshe kuri internet.
-        </p>
-
-        <p>
-            Ushobora gukora tasks ukaronka amafaranga kuri balance yawe.
-        </p>
-
-        <button onclick="closeAbout()">Close</button>
+    <div>
+      <h3>Net Income</h3>
+      <p id="balance">0 BIF</p>
     </div>
-    <!-- HERE END ABOUT -->
+  </div>
+</div>
 
-    <div class="card">
-        <h3>💰 Your Balance</h3>
-        <p id="balance">0 Fbu</p>
-    </div>
+<!-- MENU -->
+<div class="menu">
+  <div>
+    <img src="https://img.icons8.com/ios-filled/50/user.png"/>
+    <p>Profile</p>
+  </div>
+  <div>
+    <img src="https://img.icons8.com/ios-filled/50/company.png"/>
+    <p>Pay Client</p>
+  </div>
+  <div>
+    <img src="https://img.icons8.com/ios-filled/50/money.png"/>
+    <p>Cash Out</p>
+  </div>
+  <div>
+    <img src="https://img.icons8.com/ios-filled/50/box.png"/>
+    <p>Bundles</p>
+  </div>
+</div>
 
-        </div>
+<!-- BONUS -->
+<div class="bonus">
+  🎁 Welcome Bonus: <span id="bonus">0</span> BIF
+</div>
 
-        <h1 id="welcome"></h1>
+<!-- TASK -->
+<div style="text-align:center; margin:20px;">
+  <button onclick="doTask()" style="padding:15px 30px; background:lime; border:none; border-radius:10px;">
+    Do Task (+150 BIF)
+  </button>
+</div>
 
-        <div class="card">
-            <h3>📋 Tasks</h3>
-            <button onclick="doTask()">Do Task (+150 Fbu)</button>
-        </div>
-
-    </div>
+<!-- NAV -->
+<div class="nav">
+  <div>Dashboard</div>
+  <div>Team</div>
+  <div>Withdraw</div>
+  <div onclick="logout()">Sign out</div>
+</div>
 
 <script>
-    // Show username
-    let user = localStorage.getItem("username");
-    document.getElementById("welcome").innerText = "Welcome " + user;
 
-    // Balance system
-    let balance = localStorage.getItem("balance") || 0;
-    document.getElementById("balance").innerText = balance + " Fbu";
+// GET BALANCE
+let balance = localStorage.getItem("balance") || 0;
+document.getElementById("balance").innerText = balance + " BIF";
+document.getElementById("bonus").innerText = balance;
 
-    function doTask(){
-        balance = parseInt(balance) + 150;
-        localStorage.setItem("balance", balance);
-        document.getElementById("balance").innerText = balance + " Fbu";
-    }
+// TASK BUTTON
+function doTask(){
+  balance = parseInt(balance) + 150;
+  localStorage.setItem("balance", balance);
+  document.getElementById("balance").innerText = balance + " BIF";
+  document.getElementById("bonus").innerText = balance;
+}
 
-    function logout(){
-        window.location.href = "index.html";
-    }
+// LOGOUT
+function logout(){
+  window.location.href = "index.html";
+}
+
 </script>
 
 </body>
 </html>
-<script>
-function showAbout(){
-    document.getElementById("aboutBox").style.display = "block";
-    }
-</script>
-<a href="#" onclick="showAbout()">📘 About</a>
